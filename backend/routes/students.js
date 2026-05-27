@@ -1,0 +1,11 @@
+const r = require("express").Router();
+const c = require("../controllers/studentController");
+const { protect, authorize } = require("../middleware/auth");
+r.get("/",    protect, authorize("admin","teacher"), c.getAll);
+r.get("/:id", protect, c.getOne);
+r.post("/",   protect, authorize("admin"), c.create);
+r.put("/:id", protect, authorize("admin"), c.update);
+r.delete("/:id", protect, authorize("admin"), c.remove);
+r.put("/:id/enroll",   protect, authorize("admin"), c.enrollCourse);
+r.put("/:id/unenroll", protect, authorize("admin"), c.unenrollCourse);
+module.exports = r;
